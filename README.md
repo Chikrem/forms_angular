@@ -1,6 +1,6 @@
 # FormsReativos
 
-Este projeto foi gerado com [Angular CLI](https://github.com/angular/angular-cli) versão 13.2.5.
+Este projeto foi gerado com [Angular CLI](https://github.com/angular/angular-cli) versão 14.2.2.
 
 ## Servidor de desenvolvimento
 
