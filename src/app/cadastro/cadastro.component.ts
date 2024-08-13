@@ -1,6 +1,7 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ConsultaCepService } from './../service/consulta-cep.service';
 
 @Component({
   selector: 'app-cadastro',
@@ -8,19 +9,43 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./cadastro.component.css']
 })
 export class CadastroComponent implements OnInit {
+  constructor(
+    private router: Router,
+    private consultaCepService: ConsultaCepService) { }
 
-  constructor(private router: Router) { } // Implementando rotas de redirecionamento app-routing.module.
+ngOnInit(): void {
+}
 
-  ngOnInit(): void {
+consultaCEP(ev: any, f: NgForm) {
+  const cep = ev.target.value;
+  if(cep !== ''){
+    this.consultaCepService.getConsultaCep(cep).subscribe(resultado =>
+    {
+      console.log(resultado);
+      this.populandoEndereco(resultado, f);
+    });
   }
+}
 
-  cadastrar(form: NgForm){    // Como retorno do Console, teremos um objeto NgForm.
+populandoEndereco(dados: any, form: NgForm) {
+  form.form.patchValue({
+    endereco: dados.logradouro,
+    complemento: dados.complemento,
+    bairro: dados.bairro,
+    cidade: dados.localidade,
+    estado: dados.uf,
+  });
+}
+
+
+  cadastrar(form: NgForm) {    // Como retorno do Console, teremos um objeto NgForm.
     if (form.valid) {
       this.router.navigate(['./sucesso'])  // Caso form seja válido, redirecionar para path: 'sucesso'.
-    }  else {
+    } else {
       alert('Formulário Inválido.')
     }
-      console.log(form.controls);
-    
+    console.log(form.controls);
+
   }
+
 }
