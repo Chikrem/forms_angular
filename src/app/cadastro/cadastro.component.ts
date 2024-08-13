@@ -1,5 +1,6 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-cadastro',
@@ -8,12 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CadastroComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) { } // Implementando rotas de redirecionamento app-routing.module.
 
   ngOnInit(): void {
   }
 
-  cadastrar(){
-      console.log('Formulário enviado');
+  cadastrar(form: NgForm){    // Como retorno do Console, teremos um objeto NgForm.
+    if (form.valid) {
+      this.router.navigate(['./sucesso'])  // Caso form seja válido, redirecionar para path: 'sucesso'.
+    }  else {
+      alert('Formulário Inválido.')
+    }
+      console.log(form.controls);
+    
   }
 }
